@@ -35,9 +35,9 @@ class OrderController < ApplicationController
   def send_notification(action)
     notifier = ThirdPartyNotifier.new(@model,action)
     if notifier.notify
-      Rails.logger.error "Failed to send webhook notification for action: #{action}"
-      render json: { model: @model, message: "Order #{action} successfully, but there was an error calling the webhook" }
+      render json: { model: @model, message: "Order #{action} successfully, and message notified" }
     else
+      Rails.logger.error "Failed to send webhook notification for action: #{action}"
       render json: { model: @model, message: "Order #{action} successfully, but there was an error calling the webhook" }, status: :unprocessable_entity
     end
   end
